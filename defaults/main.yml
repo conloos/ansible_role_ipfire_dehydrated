@@ -1,0 +1,7 @@
+---
+default:
+  dehydrated_challengetype: "http-01"
+  dehydrated_www_dir: "/var/www/dehydrated"
+  dehydrated_renew_days: "0"
+  dehydrated_ca_url: "letsencrypt"
+...

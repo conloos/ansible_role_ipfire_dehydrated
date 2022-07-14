@@ -1,0 +1,34 @@
+---
+- name: configure dehydrated
+  ansible.builtin.template:
+    src: config.j2
+    dest: '/etc/dehydrated/config'
+    owner: root
+    group: root
+    mode: '0644'
+    backup: true
+
+- name: config domains
+  ansible.builtin.template:
+    src: domains.txt.j2
+    dest: '/etc/dehydrated/domains.txt'
+    owner: root
+    group: root
+    mode: '0644'
+    backup: true
+
+# we want to only create the logfile if it dont exist
+- name: get filestatus
+  ansible.builtin.stat:
+    path: /var/log/dehydrated.log
+  register: p
+
+- name: create logfile
+  ansible.builtin.file:
+    state: touch
+    path: "/var/log/dehydrated.log"
+    owner: root
+    group: syslogd
+    mode: '0774'
+  when: not p.stat.exists
+...

@@ -1,0 +1,12 @@
+CA="{{ dehydrated_ca_url | default(default.dehydrated_ca_url) }}"
+CHALLENGETYPE="{{ dehydrated_challengetype | default(default.dehydrated_challengetype) }}"
+CONFIG_D="${BASEDIR}/conf.d"
+DOMAINS_TXT="${BASEDIR}/domains.txt"
+CERTDIR="${BASEDIR}/certs"
+WELLKNOWN="{{ dehydrated_www_dir | default(default.dehydrated_www_dir) }}"
+CURL_OPTS="-k"
+HOOK="${BASEDIR}/hook.sh"
+RENEW_DAYS="{{ dehydrated_renew_days | default(default.dehydrated_renew_days) }}"
+CONTACT_EMAIL="{{ dehydrated_contact_email | default(default.dehydrated_contact_email) }}"
+AUTO_CLEANUP="no"
+API=auto

@@ -1,0 +1,15 @@
+---
+- name: update pakfire index
+  ansible.builtin.shell:
+    cmd: /usr/local/bin/pakfire update
+    chdir: /usr/local/bin
+    executable: /bin/bash
+
+# Run that task only if "/etc/dehydrated" didn't exist
+- name: install dehydrated
+  ansible.builtin.shell:
+    cmd: /usr/local/bin/pakfire install dehydrated
+    chdir: /usr/local/bin
+    executable: /bin/bash
+    creates: /etc/dehydrated
+...

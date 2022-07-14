@@ -1,0 +1,24 @@
+argument_specs:
+  main:
+    short_description: Main entrypoint
+    options:
+      dehydrated_challengetype:
+        type: str
+        default: "{{ default.dehydrated_challengetype }}"
+        description: ... our servers validate that you control the domain names in that certificate using “challenges,” as defined by the ACME standard.
+      dehydrated_www_dir:
+        type: path
+        default: "{{ default.dehydrated_www_dir }}"
+        description: Directory where dehydrated is able to save the challenge authentication data.
+      dehydrated_renew_days:
+        type: str
+        default: "{{ default.dehydrated_renew_days }}"
+        description: Time to wait before renew.
+      dehydrated_contact_email:
+        type: str
+        required: true
+        description: email contact
+      dehydrated_ca_url:
+        type: str
+        default: "{{ default.dehydrated_ca_url }}"
+        description: URL to acme-ca "letsencrypt"-url is hardcoded. So e.g. "https://example.com/acme/acme/directory"

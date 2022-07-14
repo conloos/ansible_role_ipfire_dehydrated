@@ -1,0 +1,6 @@
+Listen 80
+<VirtualHost *:80>
+  DocumentRoot "{{ dehydrated_www_dir | default(default.dehydrated_www_dir) }}"
+  Alias /.well-known/acme-challenge {{ dehydrated_www_dir | default(default.dehydrated_www_dir) }}
+  Options Indexes MultiViews
+</VirtualHost>

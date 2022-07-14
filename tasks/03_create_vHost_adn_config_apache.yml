@@ -1,0 +1,45 @@
+---
+- name: Create dehydrated http-01 directory
+  ansible.builtin.file:
+    state: directory
+    path: "{{ dehydrated_www_dir | default(default.dehydrated_www_dir) }}"
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: copy apache config
+  ansible.builtin.template:
+    src: dehydrated.conf.j2
+    dest: '/etc/httpd/conf/vhosts.d/dehydrated.conf'
+    owner: root
+    group: root
+    mode: '0644'
+    backup: true
+
+- name: remap certificate
+  lineinfile:
+    path: /etc/httpd/conf/vhosts.d/ipfire-interface-ssl.conf
+    insertafter: '    SSLCertificateKeyFile /etc/httpd/server-ecdsa.key'
+    line: "    SSLCertificateFile /etc/dehydrated/certs/{{ cloudinit_fqdn }}/cert.pem"
+  register: add_cert
+
+- name: remap key
+  lineinfile:
+    path: /etc/httpd/conf/vhosts.d/ipfire-interface-ssl.conf
+    insertafter: '    SSLCertificateFile /etc/dehydrated/certs/{{ cloudinit_fqdn }}/cert.pem'
+    line: "    SSLCertificateKeyFile /etc/dehydrated/certs/{{ cloudinit_fqdn }}/privkey.pem"
+
+- name: remap ca-chains
+  lineinfile:
+    path: /etc/httpd/conf/vhosts.d/ipfire-interface-ssl.conf
+    insertafter: '    SSLCertificateKeyFile /etc/dehydrated/certs/{{ cloudinit_fqdn }}/privkey.pem'
+    line: "    SSLCertificateChainFile /etc/dehydrated/certs/{{ cloudinit_fqdn }}/fullchain.pem"
+
+# restart apache ich ssl-stuff added
+- name: restart apache
+  ansible.builtin.sysvinit:
+    name: apache
+    state: restarted
+    enabled: yes
+  when: add_cert.changed
+...
