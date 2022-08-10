@@ -22,12 +22,12 @@
 
 - name: register Terms
   ansible.builtin.shell:
-    cmd: sudo /usr/bin/dehydrated --register --accept-terms >> /var/log/dehydrated.log 2>&1
+    cmd: "sudo /usr/bin/dehydrated --register --accept-terms >> /var/log/dehydrated.log 2>&1"
     chdir: /usr/bin
     executable: /bin/bash
 
 - name: get or renew certificate
   ansible.builtin.shell:
-    cmd: sudo /usr/bin/dehydrated --cleanup-delete  >> /var/log/dehydrated.log 2>&1 && sudo /usr/bin/dehydrated --force --cron >> /var/log/dehydrated.log 2>&1 && /etc/init.d/apache restart
+    cmd: "sudo /usr/bin/dehydrated --cleanup-delete  >> /var/log/dehydrated.log 2>&1 && sudo /usr/bin/dehydrated --force --cron >> /var/log/dehydrated.log 2>&1 && /etc/init.d/apache restart"
     chdir: /usr/bin
     executable: /bin/bash
