@@ -21,4 +21,4 @@ argument_specs:
       dehydrated_ca_url:
         type: str
         default: "{{ default.dehydrated_ca_url }}"
-        description: URL to acme-ca "letsencrypt"-url is hardcoded. So e.g. "https://example.com/acme/acme/directory"
+        description: URL to CA "letsencrypt"-url is hardcoded. So e.g. "https://example.com/acme/acme/directory"
