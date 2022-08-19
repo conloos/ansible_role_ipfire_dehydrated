@@ -20,7 +20,7 @@
 # we want to only create the logfile if it dont exist
 - name: get filestatus
   ansible.builtin.stat:
-    path: /var/log/dehydrated.log
+    path: "/var/log/dehydrated.log"
   register: p
 
 - name: create logfile
