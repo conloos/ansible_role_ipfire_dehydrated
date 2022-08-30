@@ -18,7 +18,7 @@
     hour: "*/12"
     user: root
     job: "sudo /usr/bin/dehydrated --cleanup-delete  >> /var/log/dehydrated.log 2>&1 && sudo /usr/bin/dehydrated --force --cron >> /var/log/dehydrated.log 2>&1 && /etc/init.d/apache restart"
-    backup: true
+    backup: True
 
 - name: register Terms
   ansible.builtin.shell:

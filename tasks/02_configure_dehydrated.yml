@@ -6,7 +6,7 @@
     owner: root
     group: root
     mode: '0644'
-    backup: true
+    backup: True
 
 - name: config domains
   ansible.builtin.template:
@@ -15,7 +15,7 @@
     owner: root
     group: root
     mode: '0644'
-    backup: true
+    backup: True
 
 # we want to only create the logfile if it dont exist
 - name: get filestatus

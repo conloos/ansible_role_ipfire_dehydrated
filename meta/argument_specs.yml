@@ -16,7 +16,7 @@ argument_specs:
         description: Time to wait before renew.
       dehydrated_contact_email:
         type: str
-        required: true
+        required: True
         description: email contact
       dehydrated_ca_url:
         type: str
