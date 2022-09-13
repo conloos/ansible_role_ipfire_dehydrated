@@ -1,6 +1,12 @@
+---
 argument_specs:
   main:
-    short_description: Main entrypoint
+    # https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-argument-validation
+    # https://docs.ansible.com/ansible/latest/dev_guide/developing_program_flow_modules.html#argument-spec
+    short_description: Role for configuring dehydrated on ipfire.
+    description: Role for configuring dehydrated on ipfire.
+    author:
+      - Frank Dornheim
     options:
       dehydrated_challengetype:
         type: str
@@ -16,9 +22,10 @@ argument_specs:
         description: Time to wait before renew.
       dehydrated_contact_email:
         type: str
-        required: True
+        required: true
         description: email contact
       dehydrated_ca_url:
         type: str
         default: "{{ default.dehydrated_ca_url }}"
         description: URL to CA "letsencrypt"-url is hardcoded. So e.g. "https://example.com/acme/acme/directory"
+...

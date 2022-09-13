@@ -1,2 +1,8 @@
 ---
-# handlers file for ipfire
+# restart apache ich ssl-stuff added
+- name: Restart apache
+  ansible.builtin.sysvinit:
+    name: apache
+    state: restarted
+    enabled: true
+...

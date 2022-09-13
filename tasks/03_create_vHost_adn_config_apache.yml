@@ -7,39 +7,35 @@
     group: root
     mode: '0755'
 
-- name: copy apache config
+- name: Copy apache config
   ansible.builtin.template:
     src: dehydrated.conf.j2
     dest: '/etc/httpd/conf/vhosts.d/dehydrated.conf'
     owner: root
     group: root
     mode: '0644'
-    backup: True
+    backup: true
 
-- name: remap certificate
-  lineinfile:
+- name: Remap certificate
+  ansible.builtin.lineinfile:
     path: /etc/httpd/conf/vhosts.d/ipfire-interface-ssl.conf
     insertafter: '    SSLCertificateKeyFile /etc/httpd/server-ecdsa.key'
     line: "    SSLCertificateFile /etc/dehydrated/certs/{{ cloudinit_fqdn }}/cert.pem"
-  register: add_cert
+  notify: Restart apache
 
-- name: remap key
-  lineinfile:
+- name: Remap key
+  ansible.builtin.lineinfile:
     path: /etc/httpd/conf/vhosts.d/ipfire-interface-ssl.conf
     insertafter: '    SSLCertificateFile /etc/dehydrated/certs/{{ cloudinit_fqdn }}/cert.pem'
     line: "    SSLCertificateKeyFile /etc/dehydrated/certs/{{ cloudinit_fqdn }}/privkey.pem"
+  notify: Restart apache
 
-- name: remap ca-chains
-  lineinfile:
+- name: Remap ca-chains
+  ansible.builtin.lineinfile:
     path: /etc/httpd/conf/vhosts.d/ipfire-interface-ssl.conf
     insertafter: '    SSLCertificateKeyFile /etc/dehydrated/certs/{{ cloudinit_fqdn }}/privkey.pem'
     line: "    SSLCertificateChainFile /etc/dehydrated/certs/{{ cloudinit_fqdn }}/fullchain.pem"
+  notify: Restart apache
 
-# restart apache ich ssl-stuff added
-- name: restart apache
-  ansible.builtin.sysvinit:
-    name: apache
-    state: restarted
-    enabled: yes
-  when: add_cert.changed
+
 ...

@@ -1,6 +1,6 @@
 ---
 # the ansible module wants the executable crontab so we have to create a symlink
-- name: sysmlink fcrontab to crontab
+- name: Sysmlink fcrontab to crontab
   ansible.builtin.file:
     src: /usr/bin/fcrontab
     dest: /usr/bin/crontab
@@ -9,7 +9,7 @@
     state: link
 
 # Well, I have to use "--force" because my certs are only valid for one day and renew="0" dont work
-- name: dehydrated cron
+- name: Dehydrated cron job
   ansible.builtin.cron:
     name: fdo - renew step ca certificate
     state: present
@@ -17,17 +17,18 @@
     minute: "0"
     hour: "*/12"
     user: root
-    job: "sudo /usr/bin/dehydrated --cleanup-delete  >> /var/log/dehydrated.log 2>&1 && sudo /usr/bin/dehydrated --force --cron >> /var/log/dehydrated.log 2>&1 && /etc/init.d/apache restart"
-    backup: True
+    job: "sudo /usr/bin/dehydrated --cleanup-delete  >> /var/log/dehydrated.log 2>&1 && sudo /usr/bin/dehydrated --force --cron >> /var/log/dehydrated.log 2>&1 && /etc/init.d/apache restart"  # noqa yaml
+    backup: true
 
-- name: register Terms
-  ansible.builtin.shell:
+- name: Register Terms
+  ansible.builtin.commands:
     cmd: "sudo /usr/bin/dehydrated --register --accept-terms >> /var/log/dehydrated.log 2>&1"
     chdir: /usr/bin
     executable: /bin/bash
 
-- name: get or renew certificate
-  ansible.builtin.shell:
-    cmd: "sudo /usr/bin/dehydrated --cleanup-delete  >> /var/log/dehydrated.log 2>&1 && sudo /usr/bin/dehydrated --force --cron >> /var/log/dehydrated.log 2>&1 && /etc/init.d/apache restart"
+- name: Get or renew certificate
+  ansible.builtin.commands:
+    cmd: "sudo /usr/bin/dehydrated --cleanup-delete  >> /var/log/dehydrated.log 2>&1 && sudo /usr/bin/dehydrated --force --cron >> /var/log/dehydrated.log 2>&1 && /etc/init.d/apache restart"  # noqa yaml
     chdir: /usr/bin
     executable: /bin/bash
+...
