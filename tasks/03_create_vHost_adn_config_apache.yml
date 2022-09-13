@@ -36,6 +36,4 @@
     insertafter: '    SSLCertificateKeyFile /etc/dehydrated/certs/{{ cloudinit_fqdn }}/privkey.pem'
     line: "    SSLCertificateChainFile /etc/dehydrated/certs/{{ cloudinit_fqdn }}/fullchain.pem"
   notify: Restart apache
-
-
 ...
